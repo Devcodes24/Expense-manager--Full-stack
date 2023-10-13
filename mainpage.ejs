@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head><title>
+Main page
+</title>
+You spend freely, We save intellegently.
+</head>
+<body>
+<a href="/mainpage"><button>Anniversary</button></a>
+
+<table border="7" width="20%">
+<tr>
+<th>S.no</th>
+<th>Item you bought today</th>
+<th>Year</th>
+</tr>
+
+<%if(table2.length > 0){
+for(var i=0;i<table2.length;i++){%>
+<tr>
+
+<td><%-i%></td>
+<td><%-table2[i].itemname%></td>
+<td><%-table2[i].itemyear%></td>
+<%}}
+else{%>
+<h2>No product aniversary</h2>
+<%}%>
+
+</tr>
+
+</table>
+</body>
+
+</html>
+
+

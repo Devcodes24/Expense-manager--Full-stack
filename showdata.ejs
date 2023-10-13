@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+
+<html>
+<head><title>Showing data</title><h1>Showing data</h1></head>
+
+<body>
+<table border="1" width="90%">
+<tr>
+<th>Seriel no</th>
+<th>Snacks</th>
+<th>Items</th>
+<th>Trips</th>
+<th>Total spend</th>
+<th>Date</th>
+</tr>
+
+<%if(table.length > 0){
+for(var i=0;i<table.length;i++){%>
+<tr>
+
+<td><%-i%></td>
+<td>₹<%-table[i].snacks%></td>
+<td>₹<%-table[i].item%></td>	
+<td>₹<%-table[i].trip%></td>
+<td>₹<%-(table[i].trip+table[i].item+table[i].snacks)%></td>
+<td><%-table[i].date%></td>
+
+<%}}
+else{%>
+<h2>Data not found</h2>
+<%}%>
+
+</tr>
+
+</table>
+
+<%
+var tk1=0;
+var tk2=0;
+var tk3=0;
+for(var i=0;i<table.length;i++){
+
+tk1=tk1+table[i].snacks;
+tk2=tk2+table[i].item;
+tk3=tk3+table[i].trip; 
+}%>
+
+
+<%var a=table[table.length-1].snacks;%>
+<%var big=table[table.length-1].item;%>
+<%var cat=table[table.length-1].trip;%>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+
+<canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+<canvas id="urChart" style="width:100%;max-width:600px"></canvas>
+
+<script>
+// of that day..
+
+var geta = <%= a %>;
+var getbig = <%= big %>;
+var getcat = <%= cat %>;
+
+var xValues = ["snacks","trip","item"];
+var yValues = [geta,getbig,getcat];
+var barColors = ["red", "green","brown"];
+
+new Chart("myChart", {
+  type: "bar",
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data:yValues
+    }]
+  },
+  options: {
+    legend: {display: false},
+    title: {
+      display: true,
+      text: "Todays spendings-"
+    }
+  }
+});
+</script>
+
+
+
+<canvas id="pieChart" style="width:100%;max-width:600px"></canvas>
+
+<script>
+// Pie chart of this month
+
+var gettk1 = <%= tk1 %>;
+var gettk2 = <%= tk2 %>;
+var gettk3 = <%= tk3 %>;
+
+var xValues = ["Snacks", "Item", "Trip"];
+var yValues = [gettk1,gettk2,gettk3];
+var barColors = [
+  "#b91d47",
+  "#00aba9",
+  "#2b5797",
+];
+
+new Chart("pieChart", {
+  type: "pie",
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  },
+  options: {
+    title: {
+      display: true,
+      text: "This month's Expends-"
+    }
+  }
+});
+</script>
+
+
+
+
+
+
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+
+<div
+id="dChart" style="width:100%; max-width:600px; height:500px;">
+</div>
+
+<script>
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+function drawChart() {
+const data = google.visualization.arrayToDataTable([
+  ['expends', 'Mhl'],
+  ['Snacks',gettk1],
+  ['Item',gettk2],
+  ['Trip',gettk3]
+  
+]);
+
+const options = {
+  title:"This month's Expends in percentage:",
+  is3D:true
+};
+
+const chart = new google.visualization.PieChart(document.getElementById('dChart'));
+  chart.draw(data, options);
+}
+</script>
+
+
+
+
+
+</body>
+</html>
